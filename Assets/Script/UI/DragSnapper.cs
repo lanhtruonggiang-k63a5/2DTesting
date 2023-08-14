@@ -12,10 +12,14 @@ public class DragSnapper : UIBehaviour, IEndDragHandler, IBeginDragHandler
     public ScrollRect scrollRect; // the scroll rect to scroll
     public SnapDirection direction; // the direction we are scrolling
     public int itemCount; // how many items we have in our scroll rect
+    
 
     public AnimationCurve curve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
     // a curve for transitioning in order to give it a little bit of extra polish
-    public float speed; // the speed in which we snap ( normalized position per second? )
+    public float speed=1; // the speed in which we snap ( normalized position per second? )
+
+    // the hect canvas that been moved 
+    public RectTransform content;
 
     protected override void Reset()
     {
@@ -24,7 +28,24 @@ public class DragSnapper : UIBehaviour, IEndDragHandler, IBeginDragHandler
         // if we are resetting or attaching our script, try and find a scroll rect for convenience 
         if (scrollRect == null) scrollRect = GetComponent<ScrollRect>();
 
-
+    }
+    protected override void Start() {
+        base.Start();
+        SetContentToFirstPage();
+    }
+    void SetContentToFirstPage(){
+        
+        itemCount = content.childCount;
+        
+        var width = content.GetComponentInChildren<RectTransform>().rect.width;        
+        Debug.Log(this.name + " width "+ width, gameObject);
+        
+        if(itemCount %2 ==0){
+            content.localPosition = new Vector3 (-width /2 + itemCount/2*width,0,0);
+        }
+        else{
+            content.localPosition = new Vector3 (itemCount/2 * width, 0, 0);
+        }
     }
 
     // if we are snapping, stop for the next input
@@ -41,22 +62,28 @@ public class DragSnapper : UIBehaviour, IEndDragHandler, IBeginDragHandler
             throw new System.Exception("Item count can not be zero");
 
         float startNormal =
-        direction == SnapDirection.Horizontal ? scrollRect.horizontalNormalizedPosition : scrollRect.verticalNormalizedPosition;
-         // find our start position
+        direction == SnapDirection.Horizontal ?
+        scrollRect.horizontalNormalizedPosition : scrollRect.verticalNormalizedPosition;
+        // find our start position
 
         float delta = 1f / (float)(itemCount - 1);
-         // percentage each item takes
-        int target = Mathf.RoundToInt(startNormal / delta); 
+        // percentage each item takes
+        int target = Mathf.RoundToInt(startNormal / delta);
         // this finds us the closest target based on our starting point
-        float endNormal = delta * target; // this finds the normalized value of our target
+        
+        // this finds the normalized value of our target
+        float endNormal = delta * target; 
         float duration = Mathf.Abs((endNormal - startNormal) / speed);
-         // this calculates the time it takes based on our speed to get to our target
+        // this calculates the time it takes based on our speed to get to our target
 
         float timer = 0f; // timer value of course
         while (timer < 1f) // loop until we are done
         {
-            timer = Mathf.Min(1f, timer + Time.deltaTime / duration); // calculate our timer based on our speed
-            float value = Mathf.Lerp(startNormal, endNormal, curve.Evaluate(timer)); // our value based on our animation curve, cause linear is lame
+            // calculate our timer based on our speed
+            timer = Mathf.Min(1f, timer + Time.deltaTime / duration);
+
+            // our value based on our animation curve, cause linear is lame
+            float value = Mathf.Lerp(startNormal, endNormal, curve.Evaluate(timer));
 
             if (direction == SnapDirection.Horizontal) // depending on direction we set our horizontal or vertical position
                 scrollRect.horizontalNormalizedPosition = value;
