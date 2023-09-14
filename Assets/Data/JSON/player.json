@@ -1,0 +1,48 @@
+{
+    "player:name": "Number One",
+    "player:lives": 5,
+    "player:hp": 0.3,
+    "player:mp": 0.6,
+    "items": [
+        {
+            "name": "potions",
+            "stock": 4
+        },
+        {
+            "name": "herbs",
+            "stock": 3
+        },
+        {
+            "name": "magical_leaf",
+            "stock": 5
+        },
+        {
+            "name": "fire_scroll",
+            "stock": 2
+        }
+    ],
+    "equipment": [
+        {
+            "part": "head",
+            "item": "iron_helm"
+        },
+        {
+            "part": "left_hand",
+            "item": "wooden_shield"
+        },
+        {
+            "part": "right_hand",
+            "item": "steel_sword",
+            "extra_strength": 3
+        },
+        {
+            "part": "torso",
+            "item": "dragon_armor",
+            "resistance": "fire"
+        },
+        {
+            "part": "legs",
+            "item": "black_boots"
+        }
+    ]
+}
