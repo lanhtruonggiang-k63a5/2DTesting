@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class TestSizeDelta : MonoBehaviour
 {
     [SerializeField] RectTransform pictureRT;
-        
+    
     private void Start() {
-        RectTransform.size
+        transform.GetChild(0).gameObject.SetActive(true);
     }
 }

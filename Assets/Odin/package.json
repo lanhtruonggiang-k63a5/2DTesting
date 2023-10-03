@@ -1,0 +1,34 @@
+{
+    "name": "com.sirenix.odin-inspector",
+    "version": "2.1.13",
+    "displayName": "Odin Inspector",
+    "description": "Odin puts your Unity workflow on steroids, making it easy to build powerful and advanced user-friendly editors for you and your entire team.",
+    "unity": "2019.1",
+    "keywords": [
+      "sirenix",
+      "odin",
+      "inspector"
+    ],
+    "author": {
+      "name": "Sirenix",
+      "url": "https://odininspector.com/"
+    },
+    "samples": [
+        {
+            "displayName": "Editor Windows",
+            "path": "Samples~/Editor Windows"
+        },
+        {
+            "displayName": "Custom Attribute Processors",
+            "path": "Samples~/Custom Attribute Processors"
+        },
+        {
+            "displayName": "Custom Drawers",
+            "path": "Samples~/Custom Drawers"
+        },
+        {
+            "displayName": "Sample - RPG Editor",
+            "path": "Samples~/Sample - RPG Editor"
+        }
+      ]
+  }
